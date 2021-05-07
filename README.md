@@ -22,6 +22,8 @@ Here is an example script:
 #!/bin/bash
 
 export NAME="mycoolos"
+export WORK_DIR=$(realpath work)
+export ROOTFS_DIR="${WORK_DIR}/root"
 
 dir=$(cd "${0%[/\\]*}" > /dev/null && pwd)
 "${dir}/alpibase/scripts/build.sh"
@@ -36,5 +38,27 @@ chroot "${ROOTFS_DIR}" sh
 # unmount the image
 umount_qimage "${ROOTFS_DIR}"
 
+# generate an SD image for pi
 make_bootable_image "${WORK_DIR}/${CURRENT_IMAGE}" "${WORK_DIR}/${NAME}.img"
+```
+
+## emulation
+
+You can run it in qemu.
+
+```
+git clone https://github.com/dhruvvyas90/qemu-rpi-kernel
+sudo NAME=mycoolos ./scripts/build.sh
+sudo chown -R $(whoami) out
+
+qemu-system-arm \
+  -M versatilepb \
+  -cpu arm1176 \
+  -m 256 \
+  -hda ./out/image-mycoolos.qcow2 \
+  -net user,hostfwd=tcp::5022-:22 \
+  -dtb qemu-rpi-kernel/versatile-pb-buster.dtb \
+  -kernel qemu-rpi-kernel/kernel-qemu-4.19.50-buster \
+  -append 'root=/dev/sda2 panic=1' \
+  -no-reboot
 ```
