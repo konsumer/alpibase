@@ -47,7 +47,7 @@ make_bootable_image "${WORK_DIR}/${CURRENT_IMAGE}" "${WORK_DIR}/${NAME}.img"
 You can run it in qemu.
 
 ```
-git clone https://github.com/dhruvvyas90/qemu-rpi-kernel
+git clone --depth=1 https://github.com/dhruvvyas90/qemu-rpi-kernel
 sudo NAME=mycoolos ./scripts/build.sh
 sudo chown -R $(whoami) out
 
