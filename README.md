@@ -5,7 +5,7 @@ An extremely minimal, but easy to setup, pi OS starting-point.
 This is based on alpine for pi. The main goal is to make an easy-to-use starting-point and some tools to build what you need.
 
 ```sh
-NAME=mycoolos ./scripts/build.sh
+sudo NAME=mycoolos ./scripts/build.sh
 ```
 
 If you are making your own disk-image, I recommend making this a git-submodule, then wrapping it in a script:
