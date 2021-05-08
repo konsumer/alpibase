@@ -38,13 +38,6 @@ popd > /dev/null
 
 "${WORK_DIR}/apk/sbin/apk.static" --arch armhf -X "${ALPINE_MIRROR}/latest-stable/main" -U --allow-untrusted -p "${ROOTFS_DIR}" --initdb add alpine-base
 
-mknod -m 666 "${ROOTFS_DIR}/dev/full" c 1 7
-mknod -m 666 "${ROOTFS_DIR}/dev/ptmx" c 5 2
-mknod -m 644 "${ROOTFS_DIR}/dev/random" c 1 8
-mknod -m 644 "${ROOTFS_DIR}/dev/urandom" c 1 9
-mknod -m 666 "${ROOTFS_DIR}/dev/zero" c 1 5
-mknod -m 666 "${ROOTFS_DIR}/dev/tty" c 5 0
-
 mkdir -p "${ROOTFS_DIR}/etc/apk"
 echo "${ALPINE_MIRROR}/latest-stable/main" > "${ROOTFS_DIR}/etc/apk/repositories"
 
