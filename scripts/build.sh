@@ -58,6 +58,8 @@ echo "${STAGE}" > "${ROOTFS_DIR}/etc/hostname"
 echo -e "\n127.0.0.2\t${STAGE}\t${STAGE}.localdomain\n" >> "${ROOTFS_DIR}/etc/hosts"
 
 cat << CHROOT | chroot "${ROOTFS_DIR}" sh
+apk install haveged
+
 rc-update add haveged boot
 rc-update add devfs sysinit
 rc-update add dmesg sysinit
