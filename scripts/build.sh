@@ -30,11 +30,9 @@ load_qimage
 echo -e "\e[30;42m Setting up alpine \e[0m"
 
 wget "${ALPINE_MIRROR}/latest-stable/main/$(uname -m)/apk-tools-static-${APK_VERSION}.apk" -O "${WORK_DIR}/apk-tools-static.tgz"
-pushd > /dev/null
 mkdir -p "${WORK_DIR}/apk"
 cd "${WORK_DIR}/apk"
 tar -xzf "${WORK_DIR}/apk-tools-static.tgz"
-popd > /dev/null
 
 "${WORK_DIR}/apk/sbin/apk.static" --arch armhf -X "${ALPINE_MIRROR}/latest-stable/main" -U --allow-untrusted -p "${ROOTFS_DIR}" --initdb add alpine-base
 
@@ -51,9 +49,6 @@ echo "${STAGE}" > "${ROOTFS_DIR}/etc/hostname"
 echo -e "\n127.0.0.2\t${STAGE}\t${STAGE}.localdomain\n" >> "${ROOTFS_DIR}/etc/hosts"
 
 cat << CHROOT | chroot "${ROOTFS_DIR}" sh
-apk install haveged
-
-rc-update add haveged boot
 rc-update add devfs sysinit
 rc-update add dmesg sysinit
 rc-update add mdev sysinit
