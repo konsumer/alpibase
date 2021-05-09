@@ -255,8 +255,5 @@ function make_bootable_image() {
   sync
   umount "${MOUNTROOT}/boot" || exit 1
   umount "${MOUNTROOT}" || exit 1
-
-  echo "Remove qcow2 export image"
-  rm -f "${EXPORT_QCOW2}"
 }
 export -f make_bootable_image
